@@ -1,6 +1,4 @@
-/**
- * dog.h - defines the struct dog
- */
+/* dog.h - defines the struct dog */
 
 #ifndef DOG_H
 #define DOG_H
