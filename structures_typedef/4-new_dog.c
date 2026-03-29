@@ -1,6 +1,20 @@
 #include <stdlib.h>
-#include <string.h>
 #include "dog.h"
+
+/**
+ * str_len - returns the length of a string
+ * @s: the string
+ *
+ * Return: length of the string
+ */
+int str_len(char *s)
+{
+	int i;
+
+	for (i = 0; s[i]; i++)
+		;
+	return (i);
+}
 
 /**
  * new_dog - creates a new dog
@@ -19,14 +33,14 @@ dog_t *new_dog(char *name, float age, char *owner)
 	if (d == NULL)
 		return (NULL);
 
-	d->name = malloc(strlen(name) + 1);
+	d->name = malloc(str_len(name) + 1);
 	if (d->name == NULL)
 	{
 		free(d);
 		return (NULL);
 	}
 
-	d->owner = malloc(strlen(owner) + 1);
+	d->owner = malloc(str_len(owner) + 1);
 	if (d->owner == NULL)
 	{
 		free(d->name);
