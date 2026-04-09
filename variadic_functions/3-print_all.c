@@ -3,6 +3,17 @@
 #include "variadic_functions.h"
 
 /**
+ * struct fmt_s - maps a format char to a print function
+ * @t: the format character
+ * @f: the corresponding print function
+ */
+struct fmt_s
+{
+	char t;
+	void (*f)(va_list);
+};
+
+/**
  * print_char - prints a char from va_list
  * @args: the argument list
  */
@@ -50,7 +61,7 @@ void print_all(const char * const format, ...)
 	va_list args;
 	int i;
 	char sep;
-	struct { char t; void (*f)(va_list); } table[] = {
+	struct fmt_s table[] = {
 		{'c', print_char},
 		{'i', print_int},
 		{'f', print_float},
