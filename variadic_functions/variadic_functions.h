@@ -5,11 +5,10 @@
 
 /**
  * sum_them_all - returns the sum of all its parameters
- * @n: number of arguments
+ * @n: number of arguments passed to the function
  *
- * Return: sum of all parameters
+ * Return: sum of all parameters, or 0 if n is 0
  */
-int _putchar(char c);
 int sum_them_all(const unsigned int n, ...);
 
-#endif
+#endif /* VARIADIC_FUNCTIONS_H */
