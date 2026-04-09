@@ -3,6 +3,45 @@
 #include "variadic_functions.h"
 
 /**
+ * print_char - prints a char from va_list
+ * @args: the argument list
+ */
+void print_char(va_list args)
+{
+	printf("%c", va_arg(args, int));
+}
+
+/**
+ * print_int - prints an int from va_list
+ * @args: the argument list
+ */
+void print_int(va_list args)
+{
+	printf("%d", va_arg(args, int));
+}
+
+/**
+ * print_float - prints a float from va_list
+ * @args: the argument list
+ */
+void print_float(va_list args)
+{
+	printf("%f", va_arg(args, double));
+}
+
+/**
+ * print_string - prints a string from va_list
+ * @args: the argument list
+ */
+void print_string(va_list args)
+{
+	char *s;
+
+	s = va_arg(args, char *);
+	printf("%s", s ? s : "(nil)");
+}
+
+/**
  * print_all - prints anything based on format string
  * @format: list of types of arguments passed to the function
  */
@@ -10,36 +49,32 @@ void print_all(const char * const format, ...)
 {
 	va_list args;
 	int i;
-	char *str;
 	char sep;
+	struct { char t; void (*f)(va_list); } table[] = {
+		{'c', print_char},
+		{'i', print_int},
+		{'f', print_float},
+		{'s', print_string},
+		{0, NULL}
+	};
+	int j;
 
 	va_start(args, format);
 	i = 0;
 	sep = 0;
 	while (format && format[i])
 	{
-		if (sep)
-			printf(", ");
-		if (format[i] == 'c')
+		j = 0;
+		while (table[j].f)
 		{
-			printf("%c", va_arg(args, int));
-			sep = 1;
-		}
-		if (format[i] == 'i')
-		{
-			printf("%d", va_arg(args, int));
-			sep = 1;
-		}
-		if (format[i] == 'f')
-		{
-			printf("%f", va_arg(args, double));
-			sep = 1;
-		}
-		if (format[i] == 's')
-		{
-			str = va_arg(args, char *);
-			printf("%s", str ? str : "(nil)");
-			sep = 1;
+			if (format[i] == table[j].t)
+			{
+				if (sep)
+					printf(", ");
+				table[j].f(args);
+				sep = 1;
+			}
+			j++;
 		}
 		i++;
 	}
